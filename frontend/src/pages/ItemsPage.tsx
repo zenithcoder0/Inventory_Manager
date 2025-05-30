@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { getItems } from "../api/itemService";
+import { type ColumnsDefinition, DynamicTable } from "../components/Table";
 
 type Item = { 
     id: number;
@@ -15,17 +16,14 @@ export default function ItemsPage() {
         getItems().then(setItems).catch((err) => console.error("Failed to load items", err));
     }, []);
 
+     const columns = [
+    { header: "ID", key: "id" },
+    { header: "Name", key: "name" },
+    { header: "Quantity", key: "quantity", align: "right" },
+    { header: "Price", key: "price", align: "right" },
+] satisfies ColumnsDefinition<Item>[];
 
     return (
-        <div>
-            <h1>Inventory Items</h1>
-            <ul>
-                {items.map((item) => (
-                    <li key={item.id}>
-                    <strong>{item.name}</strong> - Qty: {item.quantity} = ${item.price}
-                    </li>
-                ))}
-            </ul>
-        </div>
+        <DynamicTable<Item> title="Inventory Items" data={items} columns={columns} />
     );
 }
