@@ -1,7 +1,7 @@
 import axios from "axios";
 import { type Item } from "../pages/Items/ItemsPage";
 
-const API_BASE = "https://localhost:7237/api";
+const API_BASE = "http://localhost:5281/api";
 
 export async function getItems() {
     const response = await axios.get(`${API_BASE}/items`);
